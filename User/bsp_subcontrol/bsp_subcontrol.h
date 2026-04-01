@@ -8,9 +8,17 @@
 #include "bsp_matlab_ctrl.h"
 #include "bsp_robstride.h"
 #include "PID_MODEL_SYSTEM.h"
+/****************************************************************     
+  last update : 2026-04-01
+  author      : DrSabi
+  说明：
+    1.初始化：更改第20行的宏定义修改id
+    2.命令更新：使用subcontrol_transmit函数进行命令更新，建议在100Hz定时中断中调用，发送的内容通过subcontrol[?].transmit_data更新
+    3.参数更新：suncontrol_receive()会在can接收中断中存储信息，接收到的信息保存在subcontrol[?].received_data中
+****************************************************************/
 
 #define SUBCTRL_ID  0x70	//0x70-0x77
-
+									
 #define SUBCONTROL_FRONT       0
 #define SUBCONTROL_LAST        1
 
