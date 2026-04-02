@@ -1,15 +1,15 @@
 /*
- * Academic License - for use in teaching, academic research, and meeting
- * course requirements at degree granting institutions only.  Not for
- * government, commercial, or other organizational use.
+ * Sponsored License - for use in support of a program or activity
+ * sponsored by MathWorks.  Not for government, commercial or other
+ * non-sponsored organizational use.
  *
  * File: rtwtypes.h
  *
  * Code generated for Simulink model 'PID_MODEL_SYSTEM'.
  *
- * Model version                  : 1.10
- * Simulink Coder version         : 24.1 (R2024a) 19-Nov-2023
- * C/C++ source code generated on : Sun Oct 19 18:45:25 2025
+ * Model version                  : 1.11
+ * Simulink Coder version         : 25.1 (R2025a) 21-Nov-2024
+ * C/C++ source code generated on : Thu Apr  2 13:16:19 2026
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M

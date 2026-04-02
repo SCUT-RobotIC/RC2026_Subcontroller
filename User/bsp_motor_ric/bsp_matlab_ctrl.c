@@ -30,7 +30,7 @@ void matlab_motor_para_init(FDCAN_HandleTypeDef *hfdcan, uint16_t can_id, uint8_
 
 void matlab_motor_inport_update(void)
 {
-  for(uint8_t i=0; i<24; i++){
+  for(uint8_t i=0; i<16; i++){
     rtU.motor_in_c[i].speed_in = motor_dji[i/8][i%8].speed_rpm;
     rtU.motor_in_c[i].circle_in = motor_dji[i/8][i%8].circle;
     rtU.motor_in_c[i].ecd =motor_dji[i/8][i%8].ecd;

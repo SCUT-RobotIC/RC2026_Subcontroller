@@ -4,7 +4,7 @@
 FDCAN_TxHeaderTypeDef fdcan_tx_header_dji;
 static uint8_t fdcan_tx_data_dji[8];
 
-motor_dji_t motor_dji[3][8] = {0};
+motor_dji_t motor_dji[2][8] = {0};
 
 void fdcan_send_dji(FDCAN_HandleTypeDef *hfdcan, int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4, uint8_t motor_id)
 {
