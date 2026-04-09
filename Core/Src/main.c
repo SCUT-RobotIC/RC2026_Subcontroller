@@ -69,14 +69,16 @@ uint8_t USART2_RX_BUF[10]={0};
 
 uint8_t cnt[10]={0};
 
-uint8_t noHumanMode=1;//改代码就给这玩意置零或删�??
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MPU_Config(void);
 /* USER CODE BEGIN PFP */
-
+void Set_servo(TIM_HandleTypeDef * htim,uint32_t Channel,uint8_t angle){
+	if(angle<=180)
+		__HAL_TIM_SET_COMPARE(htim, Channel,0.5*1000+angle*100/9);
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -144,16 +146,12 @@ int main(void)
   matlab_motor_para_init(&hfdcan1,CAN_ID_DJI_M0,VEL,10,3,0.01,20,0,0,0,10,0,0,0,20);
 	HAL_UART_Receive_IT(&huart1, buffer, 1);                       
 	HAL_UART_Receive_IT(&huart1, buffer+1, 1);
-	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_2);
-	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_3);
-	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_4);
-	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_2);
-	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_3);
-	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_4);
-
-
+	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_ALL);
+	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_ALL);
+  Set_servo(&htim2,TIM_CHANNEL_1,0);
+  Set_servo(&htim2,TIM_CHANNEL_2,45);
+  Set_servo(&htim3,TIM_CHANNEL_1,90);
+  Set_servo(&htim3,TIM_CHANNEL_2,180);
 	HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start_IT(&htim7);
 	
@@ -269,13 +267,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 //		}
     }
 }
-void Set_servo(TIM_HandleTypeDef * htim,uint32_t Channel,uint8_t angle){
-	uint16_t compare_value=0;
-	if(angle<=180){
-		compare_value=0.5*1000+angle*100/9;
-		__HAL_TIM_SET_COMPARE(htim, Channel, compare_value);
-	}
-}
+
 /* USER CODE END 4 */
 
  /* MPU Configuration */
@@ -346,6 +338,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		}
 		robstride_command_update_all();
     subcontrol_transmit();	
+    if(subcontroller.received_data[0]==0x2B){
+      Set_servo(&htim2,TIM_CHANNEL_1,180);
+    }
 	}
   /* USER CODE END Callback 1 */
 }

@@ -18,23 +18,23 @@
 
 typedef enum
 {
-  CAN_ID_DM_M0  = 0x00,
-  CAN_ID_DM_M1  = 0x01,
-  CAN_ID_DM_M2  = 0x02,
-  CAN_ID_DM_M3  = 0x03,
-  CAN_ID_DM_M4  = 0x04,
-  CAN_ID_DM_M5  = 0x05,
-  CAN_ID_DM_M6  = 0x06,
-  CAN_ID_DM_M7  = 0x07,
+  CAN_ID_DM_M0  = 0x30,
+  CAN_ID_DM_M1  = 0x31,
+  CAN_ID_DM_M2  = 0x32,
+  CAN_ID_DM_M3  = 0x33,
+  CAN_ID_DM_M4  = 0x34,
+  CAN_ID_DM_M5  = 0x35,
+  CAN_ID_DM_M6  = 0x36,
+  CAN_ID_DM_M7  = 0x37,
 
-  MASTER_ID_DM_M0  = 0x10,
-  MASTER_ID_DM_M1  = 0x11,
-  MASTER_ID_DM_M2  = 0x12,
-  MASTER_ID_DM_M3  = 0x13,
-  MASTER_ID_DM_M4  = 0x14,
-  MASTER_ID_DM_M5  = 0x15,
-  MASTER_ID_DM_M6  = 0x16,
-  MASTER_ID_DM_M7  = 0x17,
+  MASTER_ID_DM_M0  = 0x40,
+  MASTER_ID_DM_M1  = 0x41,
+  MASTER_ID_DM_M2  = 0x42,
+  MASTER_ID_DM_M3  = 0x43,
+  MASTER_ID_DM_M4  = 0x44,
+  MASTER_ID_DM_M5  = 0x45,
+  MASTER_ID_DM_M6  = 0x46,
+  MASTER_ID_DM_M7  = 0x47,
 } can_id_dm_e;
 
 typedef enum
