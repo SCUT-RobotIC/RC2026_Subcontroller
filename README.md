@@ -4,7 +4,7 @@
 * author 91DrSabi
 * date 2026-04-01
 * description 
-  分控使用CAN通信协议与主控进行数据交互，支持数据包的发送和接收。分控板的CAN ID范围为0x70~0x77，主控板的CAN ID范围为0x78~0x7F，通信波特率为1Mbps。
+  分控使用CAN通信协议与主控进行数据交互，支持数据包的发送和接收。分控板的CAN ID范围为0x70-0x77，主控板的CAN ID范围为0x78-0x7F，通信波特率为1Mbps。
   具体通信协议见\User\bsp_subcontrol\subcontrol.md
   分控食用步骤：
   1. 硬件连接：
