@@ -28,10 +28,10 @@ typedef struct{
     uint32_t heartBeatCnt;//1000hz
     uint8_t errorState;
 		uint8_t received_data[20];
-		uint8_t transmit_data[20];
+		uint8_t transmit_data[16];
 }data_subcontrol_t;
 
 void subcontrol_init(void);
-void subcontrol_receive(uint8_t *data);
+void subcontrol_receive(uint32_t id, uint8_t *data);
 void subcontrol_transmit(void);
 #endif  

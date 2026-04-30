@@ -15,8 +15,6 @@ motor_vesc_t motor_vesc[2][8] = {0};
 void vesc_init(FDCAN_HandleTypeDef *hfdcan)
 {
 	fdcan_filter_init_vesc(hfdcan);
-	HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_FIFO1_WATERMARK, 0);
-	HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_BUS_OFF, 0);
 	for(int j=0; j<3; j++){
 		for(int i=0; i<8; i++){
 			motor_vesc[j][i].id = 0x10+i;

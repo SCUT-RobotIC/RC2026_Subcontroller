@@ -24,6 +24,12 @@ void fdcan_all_init_start(void)
 	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_WATERMARK, 0);
   HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_WATERMARK, 0);
   HAL_FDCAN_ActivateNotification(&hfdcan3, FDCAN_IT_RX_FIFO0_WATERMARK, 0);
+	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO1_WATERMARK, 0);
+	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_BUS_OFF, 0);
+	HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO1_WATERMARK, 0);
+	HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_BUS_OFF, 0);
+	HAL_FDCAN_ActivateNotification(&hfdcan3, FDCAN_IT_RX_FIFO1_WATERMARK, 0);
+	HAL_FDCAN_ActivateNotification(&hfdcan3, FDCAN_IT_BUS_OFF, 0);
 }
 
 void fdcan_filter_init(FDCAN_HandleTypeDef *hfdcan)
@@ -60,6 +66,9 @@ void fdcan_fifo0_rx_callback(FDCAN_HandleTypeDef *hfdcan, uint8_t fdcan_ch)
       uint8_t i = id - MASTER_ID_DM_M0;
       motor_update_dm(&motor_dm[fdcan_ch][i], fdcan_rx_data);
     }
+		else if((id&0xFF)==SUBCTRL_ID){
+      subcontrol_receive(fdcan_rx_data);
+    }
   }
 }
 
@@ -74,9 +83,6 @@ void fdcan_fifo1_rx_callback(FDCAN_HandleTypeDef *hfdcan, uint8_t fdcan_ch)
       uint8_t id_robstride = (fdcan_rx_header.Identifier >> 8) & 0xFF; // get id
       uint8_t i = id_robstride - CAN_ID_ROBSTRIDE_M0;
       robstride_info_update(&motor_robstride[fdcan_ch][i], id, fdcan_rx_data);
-    }
-		else if((id&0xFF)==SUBCTRL_ID){
-      subcontrol_receive(id, fdcan_rx_data);
     }
 		else if((id&0xFF)>=CAN_ID_VESC_M0 && (id&0xFF)<=CAN_ID_VESC_M7)
 		{
