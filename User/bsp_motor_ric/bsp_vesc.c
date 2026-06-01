@@ -10,11 +10,10 @@
 FDCAN_TxHeaderTypeDef fdcan_tx_header_vesc;
 uint8_t fdcan_tx_data_vesc[4];
 
-motor_vesc_t motor_vesc[2][8] = {0};
+motor_vesc_t motor_vesc[3][8] = {0};
 
 void vesc_init(FDCAN_HandleTypeDef *hfdcan)
 {
-	fdcan_filter_init_vesc(hfdcan);
 	for(int j=0; j<3; j++){
 		for(int i=0; i<8; i++){
 			motor_vesc[j][i].id = 0x10+i;
@@ -100,21 +99,6 @@ void motor_update_vesc(motor_vesc_t *motor, uint8_t status, uint8_t *data)
 	}
 }
 
-void fdcan_filter_init_vesc(FDCAN_HandleTypeDef *hfdcan)
-{
-	// must run this function before HAL_FDCAN_Start()
-	FDCAN_FilterTypeDef fdcan_filter;
-	
-	fdcan_filter.IdType = FDCAN_EXTENDED_ID;
-	fdcan_filter.FilterIndex = 0;
-	fdcan_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO1;// FIFO1
-	fdcan_filter.FilterID1 = 0x00;
-	fdcan_filter.FilterID2 = 0x00;
-	HAL_FDCAN_ConfigFilter(hfdcan,&fdcan_filter);
-	HAL_FDCAN_ConfigGlobalFilter(hfdcan,FDCAN_REJECT,FDCAN_REJECT,FDCAN_REJECT_REMOTE,FDCAN_REJECT_REMOTE);
-	HAL_FDCAN_ConfigFifoWatermark(hfdcan, FDCAN_CFG_RX_FIFO1, 1);
-}
 
 void CAN_bus_off_check_reset(FDCAN_HandleTypeDef *hfdcan)
 {

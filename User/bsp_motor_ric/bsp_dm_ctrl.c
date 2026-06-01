@@ -4,7 +4,7 @@
 
 FDCAN_TxHeaderTypeDef fdcan_tx_header_dm;
 
-motor_dm_t motor_dm[2][8] = {0};
+motor_dm_t motor_dm[3][8] = {0};
 
 void dm_motor_init(motor_dm_t *motor, uint8_t can_id, uint8_t mode, float kp, float kd, float pmax, float vmax, float tmax)
 {

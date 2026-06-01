@@ -18,17 +18,13 @@
 ****************************************************************/
 
 #define SUBCTRL_ID  0x70	//0x70-0x77
-									
-#define SUBCONTROL_FRONT       0
-#define SUBCONTROL_LAST        1
-
 
 typedef struct{
     uint8_t id;//0-7
     uint32_t heartBeatCnt;//1000hz
     uint8_t errorState;
-		uint8_t received_data[20];
-		uint8_t transmit_data[20];
+		uint8_t received_data[8];
+		uint8_t transmit_data[8];
 }data_subcontrol_t;
 
 void subcontrol_init(void);

@@ -3,7 +3,7 @@
 
 FDCAN_TxHeaderTypeDef fdcan_tx_header_robstride;
 uint8_t fdcan_tx_data_robstride[8];
-motor_robstride_t motor_robstride[2][16] = {0};//3 CAN buses,16 motors per bus
+motor_robstride_t motor_robstride[3][16] = {0};//3 CAN buses,16 motors per bus
 
 /****************************************************************     
   @功能     		: 延时微秒函数
@@ -431,93 +431,93 @@ void robstride_info_update(motor_robstride_t *motor, uint32_t id, uint8_t *data)
   @ 功能     		 : 电机初始化
   @ 参数         : CAN口号(1-3)，电机ID(1-16)，电机系列，电机模式
 ****************************************************************/
-void robstride_init(uint8_t canport_1_to_2, uint8_t motorID_1_to_16, uint8_t series, uint8_t mode)
+void robstride_init(uint8_t canport_1_to_3, uint8_t motorID_1_to_16, uint8_t series, uint8_t mode)
 {
-  if(   canport_1_to_2 < 1  || canport_1_to_2 > 3   || 
+  if(   canport_1_to_3 < 1  || canport_1_to_3 > 3   || 
         motorID_1_to_16 < 1 || motorID_1_to_16 > 16 ||
         series < 0          || series > 6           ||
         mode < 0            || mode > 5                 ) 
     return;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].id           = CAN_ID_ROBSTRIDE_M + motorID_1_to_16;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].master_id    = MASTER_ID_ROBSTRIDE_M + motorID_1_to_16;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].mode         = mode;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].series       = series;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].enabled      = 1;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].getResponse  = 0;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].error        = 0;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].ang_tar_f    = 0.0f;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].spd_tar_f    = 0.0f;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].tor_tar_f    = 0.0f;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].acc_tar_f    = 0.0f;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kp_tar_f     = 0.0f;
-  motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kd_tar_f     = 0.0f;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].id           = CAN_ID_ROBSTRIDE_M + motorID_1_to_16;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].master_id    = MASTER_ID_ROBSTRIDE_M + motorID_1_to_16;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].mode         = mode;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].series       = series;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].enabled      = 1;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].getResponse  = 0;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].error        = 0;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].ang_tar_f    = 0.0f;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].spd_tar_f    = 0.0f;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].tor_tar_f    = 0.0f;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].acc_tar_f    = 0.0f;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kp_tar_f     = 0.0f;
+  motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kd_tar_f     = 0.0f;
   switch(series)
   {
     case rs00:{
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].ang_max = rs00_max_angle;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].spd_max = rs00_max_speed;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].tor_max = rs00_max_torque;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kp_max  = rs00_max_kp;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kd_max  = rs00_max_kd;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].ang_max = rs00_max_angle;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].spd_max = rs00_max_speed;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].tor_max = rs00_max_torque;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kp_max  = rs00_max_kp;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kd_max  = rs00_max_kd;
       break;}
     case rs01:{
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].ang_max = rs01_max_angle;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].spd_max = rs01_max_speed;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].tor_max = rs01_max_torque;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kp_max  = rs01_max_kp;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kd_max  = rs01_max_kd;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].ang_max = rs01_max_angle;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].spd_max = rs01_max_speed;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].tor_max = rs01_max_torque;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kp_max  = rs01_max_kp;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kd_max  = rs01_max_kd;
       break;}
     case rs02:{
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].ang_max = rs02_max_angle;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].spd_max = rs02_max_speed;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].tor_max = rs02_max_torque;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kp_max  = rs02_max_kp;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kd_max  = rs02_max_kd;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].ang_max = rs02_max_angle;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].spd_max = rs02_max_speed;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].tor_max = rs02_max_torque;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kp_max  = rs02_max_kp;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kd_max  = rs02_max_kd;
       break;}
     case rs03:{
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].ang_max = rs03_max_angle;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].spd_max = rs03_max_speed;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].tor_max = rs03_max_torque;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kp_max  = rs03_max_kp;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kd_max  = rs03_max_kd;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].ang_max = rs03_max_angle;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].spd_max = rs03_max_speed;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].tor_max = rs03_max_torque;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kp_max  = rs03_max_kp;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kd_max  = rs03_max_kd;
       break;}
     case rs04:{
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].ang_max = rs04_max_angle;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].spd_max = rs04_max_speed;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].tor_max = rs04_max_torque;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kp_max  = rs04_max_kp;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kd_max  = rs04_max_kd;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].ang_max = rs04_max_angle;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].spd_max = rs04_max_speed;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].tor_max = rs04_max_torque;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kp_max  = rs04_max_kp;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kd_max  = rs04_max_kd;
       break;}
     case rs05:{
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].ang_max = rs05_max_angle;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].spd_max = rs05_max_speed;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].tor_max = rs05_max_torque;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kp_max  = rs05_max_kp;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kd_max  = rs05_max_kd;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].ang_max = rs05_max_angle;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].spd_max = rs05_max_speed;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].tor_max = rs05_max_torque;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kp_max  = rs05_max_kp;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kd_max  = rs05_max_kd;
       break;}
     case rs06:{
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].ang_max = rs06_max_angle;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].spd_max = rs06_max_speed;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].tor_max = rs06_max_torque;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kp_max  = rs06_max_kp;
-      motor_robstride[canport_1_to_2-1][motorID_1_to_16-1].kd_max  = rs06_max_kd;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].ang_max = rs06_max_angle;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].spd_max = rs06_max_speed;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].tor_max = rs06_max_torque;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kp_max  = rs06_max_kp;
+      motor_robstride[canport_1_to_3-1][motorID_1_to_16-1].kd_max  = rs06_max_kd;
       break;}
     default:{
       break;}
   }
-	switch(canport_1_to_2){
+	switch(canport_1_to_3){
 		case 1:{
 			delay_us(500);
-			robstride_set_mode(&hfdcan1,&motor_robstride[canport_1_to_2-1][motorID_1_to_16-1],mode);
+			robstride_set_mode(&hfdcan1,&motor_robstride[canport_1_to_3-1][motorID_1_to_16-1],mode);
 			delay_us(500);
-			robstride_enable(&hfdcan1,&motor_robstride[canport_1_to_2-1][motorID_1_to_16-1]);
+			robstride_enable(&hfdcan1,&motor_robstride[canport_1_to_3-1][motorID_1_to_16-1]);
 			break;
 		}
 		case 2:{
 			delay_us(500);
-			robstride_set_mode(&hfdcan2,&motor_robstride[canport_1_to_2-1][motorID_1_to_16-1],mode);
+			robstride_set_mode(&hfdcan2,&motor_robstride[canport_1_to_3-1][motorID_1_to_16-1],mode);
 			delay_us(500);
-			robstride_enable(&hfdcan2,&motor_robstride[canport_1_to_2-1][motorID_1_to_16-1]);
+			robstride_enable(&hfdcan2,&motor_robstride[canport_1_to_3-1][motorID_1_to_16-1]);
 			break;
 		}
 		default:break;

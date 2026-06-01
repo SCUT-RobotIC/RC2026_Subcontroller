@@ -7,9 +7,9 @@
 #include <stdint.h>
 
 extern motor_dji_t motor_dji[3][8];
-extern motor_dm_t motor_dm[2][8];
-extern motor_vesc_t motor_vesc[2][8];
-extern motor_robstride_t motor_robstride[2][16];
+extern motor_dm_t motor_dm[3][8];
+extern motor_vesc_t motor_vesc[3][8];
+extern motor_robstride_t motor_robstride[3][16];
 void fdcan_all_init_start(void)
 {
   fdcan_filter_init(&hfdcan1);
@@ -24,12 +24,12 @@ void fdcan_all_init_start(void)
 	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_WATERMARK, 0);
   HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_WATERMARK, 0);
   HAL_FDCAN_ActivateNotification(&hfdcan3, FDCAN_IT_RX_FIFO0_WATERMARK, 0);
-	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO1_WATERMARK, 0);
-	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_BUS_OFF, 0);
-	HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO1_WATERMARK, 0);
-	HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_BUS_OFF, 0);
+	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO1_WATERMARK, 0);  	
+	HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO1_WATERMARK, 0);    	
 	HAL_FDCAN_ActivateNotification(&hfdcan3, FDCAN_IT_RX_FIFO1_WATERMARK, 0);
-	HAL_FDCAN_ActivateNotification(&hfdcan3, FDCAN_IT_BUS_OFF, 0);
+	HAL_FDCAN_ActivateNotification(&hfdcan3, FDCAN_IT_BUS_OFF, 0);   
+	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_BUS_OFF, 0);               
+	HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_BUS_OFF, 0);
 }
 
 void fdcan_filter_init(FDCAN_HandleTypeDef *hfdcan)
@@ -45,6 +45,11 @@ void fdcan_filter_init(FDCAN_HandleTypeDef *hfdcan)
 	HAL_FDCAN_ConfigFilter(hfdcan,&fdcan_filter);
 	HAL_FDCAN_ConfigGlobalFilter(hfdcan,FDCAN_REJECT,FDCAN_REJECT,FDCAN_REJECT_REMOTE,FDCAN_REJECT_REMOTE);
 	HAL_FDCAN_ConfigFifoWatermark(hfdcan, FDCAN_CFG_RX_FIFO0, 1);
+	
+	fdcan_filter.IdType = FDCAN_EXTENDED_ID;
+	fdcan_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO1;// FIFO1
+	HAL_FDCAN_ConfigGlobalFilter(hfdcan,FDCAN_REJECT,FDCAN_REJECT,FDCAN_REJECT_REMOTE,FDCAN_REJECT_REMOTE);
+	HAL_FDCAN_ConfigFifoWatermark(hfdcan, FDCAN_CFG_RX_FIFO1, 1);
 }
 
 void fdcan_fifo0_rx_callback(FDCAN_HandleTypeDef *hfdcan, uint8_t fdcan_ch)
