@@ -57,10 +57,10 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-extern motor_dji_t motor_dji[2][8];
-extern motor_dm_t motor_dm[2][8];
-extern motor_vesc_t motor_vesc[2][8];
-extern motor_robstride_t motor_robstride[2][16];
+extern motor_dji_t motor_dji[3][8];
+extern motor_dm_t motor_dm[3][8];
+extern motor_vesc_t motor_vesc[3][8];
+extern motor_robstride_t motor_robstride[3][16];
 extern data_subcontrol_t subcontroller;
 uint8_t uart_index[2]={0};
 uint8_t buffer[10]={0};
