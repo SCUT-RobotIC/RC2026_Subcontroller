@@ -21,7 +21,7 @@ void subcontrol_init()
 ****************************************************************/
 void subcontrol_receive(uint8_t *data)
 {
-  memcpy(subcontroller.received_data,data,20);
+  memcpy(subcontroller.received_data,data,8);
 }
 	
 /****************************************************************
